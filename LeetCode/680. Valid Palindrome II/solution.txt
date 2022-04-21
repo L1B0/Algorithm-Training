@@ -1,0 +1,50 @@
+/*
+Given a string s, return true if the s can be palindrome after deleting at most one character from it.
+
+ 
+
+Example 1:
+
+Input: s = "aba"
+Output: true
+Example 2:
+
+Input: s = "abca"
+Output: true
+Explanation: You could delete the character 'c'.
+Example 3:
+
+Input: s = "abc"
+Output: false
+ 
+
+Constraints:
+
+1 <= s.length <= 105
+s consists of lowercase English letters.
+
+解题思路
+
+对于不用删除的，属于下面方法的特殊情况，即没有不相等的位置。
+对于要删除一个元素才能符合回文的s，分别从左右开始进行校验，直到不相等的位置，尝试删除左侧和右侧两种情况，然后继续校验，最后输出结果。
+*/
+
+bool myvalid(char *t, int l, int r, bool flag)
+{
+    if( l >= r ) return true;
+    
+    if( t[l] == t[r] )
+    {
+        return myvalid(t, l+1, r-1, flag);
+    }
+    else if( !flag )
+    {
+        return myvalid(t, l+1, r, true) | myvalid(t, l, r-1, true);
+    }
+
+    return false;
+}
+
+bool validPalindrome(char * s){
+    return myvalid(s, 0, strlen(s)-1, false);
+}
